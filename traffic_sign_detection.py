@@ -18,7 +18,7 @@ def get_boxes_from_mask(mask):
         w = stats[i, cv2.CC_STAT_WIDTH]
         h = stats[i, cv2.CC_STAT_HEIGHT]
         area = stats[i, cv2.CC_STAT_AREA]
-        # Lọc các vật quá nhỏ, có thể là nhiễu
+        
         bboxes.append([x, y, w, h])
     return bboxes
     
