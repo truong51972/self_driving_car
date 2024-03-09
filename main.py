@@ -17,7 +17,7 @@ from traffic_sign_detection import detect_traffic_signs
 from car_controller import car_control
 
 lane_detection_model = YOLO("./models/lane_segment_model.pt")
-traffic_sign_classification_model = YOLO("./models/traffic_sign_classifier.pt")
+traffic_sign_classification_model = YOLO("./models/traffic_sign_classifier_model.pt")
 
 traffic_image_queue = Queue(maxsize=5)
 lane_image_queue = Queue(maxsize=5)

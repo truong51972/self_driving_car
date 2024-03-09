@@ -56,22 +56,15 @@ def _drive_in_straight_lane(img_birdview):
     return steering_angle, distance_Transform_img
 
 def _signal_trigger(signal_obj):
-    # print(signal_obj)
     global signal
     global signal_dict
 
+    if (signal != signal_obj['class_name']):
+        signal_dict[signal_obj['class_name']] = signal_dict.get(signal_obj['class_name'], 0) + 1
 
-    # if (signal_obj[0][1] > 0.70) and (signal != signal_obj[0][0]):
-        # signal = signal_obj[0][0]
-        # print(signal, signal_obj[0][1])
-    
-    if (signal != signal_obj[0][0]):
-        signal_dict[signal_obj[0][0]] = signal_dict.get(signal_obj[0][0], 0) + 1
-
-        # print(signal_dict)
         for i in signal_dict.keys():
-            if signal_dict[i] >= 10:
-                signal = signal_obj[0][0]
+            if signal_dict[i] >= 2:
+                signal = signal_obj['class_name']
                 print(signal + ' sign detected!')
                 signal_dict.clear()
                 break
@@ -128,6 +121,7 @@ def car_control(signal_obj, lane_segment, isShow= False):
 
         if signal == 'left' and img_birdview[points_y_1][points_x_left] == 255:
             current_action = action_dict[2]
+            print('turneaskjhdaisfhaisuf')
         elif signal == 'right' and img_birdview[points_y_1][points_x_right] == 255:
             current_action = action_dict[3]
         elif signal == 'stop':
@@ -177,5 +171,5 @@ def car_control(signal_obj, lane_segment, isShow= False):
             cv2.waitKey(1)
 
         # steering_angle = max(-1, min(1, steering_angle))
-        return None
-        # return json.dumps({"throttle": throttle, "steering": steering_angle})
+        return json.dumps({"throttle": throttle, "steering": steering_angle})
+        # return None

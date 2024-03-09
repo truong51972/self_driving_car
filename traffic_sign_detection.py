@@ -38,6 +38,7 @@ def filter_bboxes(mask, bboxes):
         if w / h > 1.3 or h / w > 1.3:
             continue
         return_bboxes.append([x, y, w, h])
+    return return_bboxes
 
 def filter_signs_by_color(image):
     """
@@ -119,10 +120,12 @@ def detect_traffic_signs(img, model, draw=None):
         class_index = results[0].probs.top1
         class_conf = round(results[0].probs.top1conf.tolist(), 2)
         class_name = name_classes_dict[class_index]
-        if(class_conf > 0.95 and class_name != 'unknown'):
-            print(class_name, class_conf)
         if draw is not None:
             text = f'{class_name} {class_conf}'
             cv2.rectangle(draw, (x, y), (x+w, y+h), (0, 255, 255), 4)
             cv2.putText(draw, text, (x, y-5),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+        if(class_conf > 0.95 and class_name != 'unknown'):
+            # print(class_name, class_conf)
+            return {'class_name': class_name, 'class_conf': class_conf}
+    
